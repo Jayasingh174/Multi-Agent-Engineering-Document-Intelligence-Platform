@@ -1,153 +1,156 @@
-# 🚀 Multi Agents Systems - Agentic RFQ Intelligence Platform
+# 🚀 Multi-Agent-Engineering-Document-Intelligence-Platform
 
-An advanced **Multi-Agent AI System** designed to automate RFQ (Request for Quotation) analysis, engineering document validation, conflict detection, and intelligent document querying.
+An **enterprise-grade Agentic AI platform** for automating **Request for Quotation (RFQ)** analysis, engineering document intelligence, procurement validation, and semantic document search.
 
-The platform combines **Agentic AI**, **RAG (Retrieval-Augmented Generation)**, **Vector Search**, and **Document Intelligence** to process complex engineering and procurement documents with minimal human intervention.
-
----
-
-# ✨ Key Features
-
-## 🤖 Multi-Agent Architecture
-
-Specialized AI agents collaborate to solve complex engineering and procurement tasks.
-
-* Query Analysis Agent
-* Retrieval Agent
-* Conflict Detection Agent
-* Optimization Agent
-* Response Generation Agent
+The platform orchestrates multiple specialized AI agents to analyze complex engineering documents, detect inconsistencies, retrieve relevant information, and generate evidence-backed responses using **Retrieval-Augmented Generation (RAG)** and vector search.
 
 ---
 
-## 📄 Multi-Format Document Processing
+# ✨ Highlights
 
-Supports:
+* 🤖 Multi-Agent AI architecture
+* 📄 Enterprise document intelligence
+* 🔍 Retrieval-Augmented Generation (RAG)
+* 🧠 Semantic vector search with FAISS
+* ⚠️ Automated engineering conflict detection
+* 📊 RFQ requirement extraction and validation
+* 📑 Source-backed responses with citations
+* ⚡ REST APIs built with FastAPI
+
+---
+
+# 🏗️ System Architecture
+
+```text
+                    User Query
+                         │
+                         ▼
+                 Agent Router (FastAPI)
+                         │
+        ┌────────────────┼────────────────┐
+        ▼                ▼                ▼
+ Intent Agent      Retrieval Agent    RFQ Agent
+        │                │                │
+        ▼                ▼                ▼
+      FAISS        Document Parser   Requirement Analysis
+        │                │
+        └────────────┬───┘
+                     ▼
+          Conflict Detection Agent
+                     │
+                     ▼
+           Response Generation Agent
+                     │
+                     ▼
+        Final Response + Source Citations
+```
+
+---
+
+# 🤖 Multi-Agent Workflow
+
+The platform follows an **Agentic AI reasoning pipeline** instead of a traditional RAG workflow.
+
+```text
+User Query
+      │
+      ▼
+Intent Analysis
+      │
+      ▼
+Task Planning
+      │
+      ▼
+Document Retrieval
+      │
+      ▼
+Conflict Detection
+      │
+      ▼
+Evidence Validation
+      │
+      ▼
+LLM Response Generation
+      │
+      ▼
+Response with Citations
+```
+
+Each agent performs a specialized responsibility before passing structured context to the next stage.
+
+---
+
+# 📄 Document Intelligence
+
+Supported document types:
 
 * PDF Documents
-* Excel BOQ Files
+* RFQ Packages
+* Bill of Quantities (BOQ)
 * Technical Specifications
-* Engineering Drawings
-* RFQ Documents
+* Engineering Reports
+* Excel Files
 
-Handled through:
+Capabilities include:
 
-```text
-document_upload.py
-document_service.py
-```
-
----
-
-## 🔍 Intelligent RAG Search
-
-The system uses embeddings and vector search for semantic retrieval.
-
-### Features
-
-* Dense Vector Search
-* Context Retrieval
-* Semantic Similarity Matching
-* Source Referencing
-
-Powered by:
-
-```text
-embedding_service.py
-vector_service.py
-chunk_service.py
-```
+* Automatic document ingestion
+* Text extraction
+* Intelligent chunking
+* Embedding generation
+* Semantic indexing
+* Context-aware retrieval
 
 ---
 
-## 🧠 Agentic Reasoning Pipeline
+# 🔍 Retrieval-Augmented Generation (RAG)
 
-Instead of traditional RAG:
+The retrieval pipeline consists of:
 
-```text
-Question
-   ↓
-Retrieve
-   ↓
-Answer
-```
+* Document chunking
+* OpenAI embeddings
+* FAISS vector indexing
+* Semantic similarity search
+* Context ranking
+* Evidence-backed answer generation
 
-The system follows:
-
-```text
-Reason
-   ↓
-Act
-   ↓
-Observe
-   ↓
-Answer
-```
-
-Agents autonomously decide:
-
-* Which documents to search
-* Which retrieval strategy to use
-* How to combine evidence
-* How to generate responses
+Each response references the supporting document chunks used during retrieval.
 
 ---
 
-## ⚠️ Engineering Conflict Detection
+# ⚠️ Engineering Conflict Detection
 
-Automatically detects:
+The platform automatically identifies:
 
 * Quantity mismatches
-* Specification conflicts
-* Missing items
-* BOQ inconsistencies
-* Cross-document discrepancies
-
-Implemented in:
-
-```text
-conflict_engine.py
-```
+* Missing BOQ items
+* Specification inconsistencies
+* Duplicate requirements
+* Cross-document conflicts
+* Procurement risks
 
 ---
 
-## 📊 RFQ Intelligence Pipeline
+# 📊 RFQ Intelligence
 
-The dedicated RFQ pipeline performs:
+The RFQ pipeline automates:
 
-* Requirement Extraction
-* Risk Analysis
-* Quantity Validation
-* Vendor Requirement Analysis
-* Document Summarization
-
-Implemented in:
-
-```text
-rfq_pipeline.py
-```
-
----
-
-## 📌 Source Citations & Confidence Score
-
-Every generated response includes:
-
-* Retrieved document references
-* Source chunks
-* Confidence indicators
-* Supporting evidence
+* Requirement extraction
+* Scope identification
+* Quantity validation
+* Risk assessment
+* Vendor requirement analysis
+* Engineering document summarization
 
 ---
 
 # 📂 Project Structure
 
 ```text
-Multi Agents Systems
+Multi-Agents-Systems/
 │
-├── app
+├── app/
 │
-├── brain
+├── brain/
 │   ├── agent_service.py
 │   ├── chunk_service.py
 │   ├── conflict_engine.py
@@ -157,59 +160,23 @@ Multi Agents Systems
 │   ├── llm_service.py
 │   └── vector_service.py
 │
-├── extraction
+├── extraction/
+├── models/
 │
-├── models
-│
-├── pipeline
+├── pipeline/
 │   ├── agent_pipeline.py
 │   ├── intelligence_service.py
 │   ├── optimization_service.py
 │   ├── query_pipeline.py
 │   └── rfq_pipeline.py
 │
-├── routers
+├── routers/
 │   ├── agent_router.py
 │   └── document_router.py
 │
-└── main.py
-```
-
----
-
-# 🧠 System Architecture
-
-```text
-User Query
-    │
-    ▼
-Agent Router
-    │
-    ▼
-Agent Pipeline
-    │
-    ▼
-Intent Analysis Agent
-    │
-    ├──────────────┐
-    ▼              ▼
-Vector Search   RFQ Analysis
-Agent           Agent
-    │              │
-    ▼              ▼
-Document Context
-    │
-    ▼
-Conflict Detection Agent
-    │
-    ▼
-Optimization Agent
-    │
-    ▼
-LLM Response Agent
-    │
-    ▼
-Final Answer + Citations
+├── main.py
+├── requirements.txt
+└── README.md
 ```
 
 ---
@@ -218,17 +185,19 @@ Final Answer + Citations
 
 ## Backend
 
-* FastAPI
 * Python
+* FastAPI
+* Uvicorn
 
 ## AI & LLM
 
 * OpenAI GPT-4o
 * OpenAI Embeddings
 
-## Vector Search
+## Retrieval
 
 * FAISS
+* RAG Pipeline
 
 ## Document Processing
 
@@ -236,59 +205,54 @@ Final Answer + Citations
 * Pandas
 * OpenPyXL
 
-## Agent Framework
+## Architecture
 
-* Custom Multi-Agent Architecture
-
-## Deployment
-
-* Uvicorn
-* Docker (Future)
+* Custom Multi-Agent System
+* REST APIs
 
 ---
 
-# 🛠 Installation
-
-## Clone Repository
+# 🚀 Installation
 
 ```bash
 git clone <repository-url>
-cd "Multi Agents Systems"
+
+cd Multi-Agents-Systems
 ```
 
-## Create Virtual Environment
+Create a virtual environment:
+
+```bash
+python -m venv venv
+```
+
+Activate:
 
 ### Windows
 
 ```bash
-python -m venv venv
 venv\Scripts\activate
 ```
 
-### Linux / Mac
+### Linux / macOS
 
 ```bash
-python3 -m venv venv
 source venv/bin/activate
 ```
 
-## Install Dependencies
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Configure Environment Variables
-
-Create a `.env` file in the project root:
+Create a `.env` file:
 
 ```env
 OPENAI_API_KEY=your_api_key
 ```
 
----
-
-# 🚀 Run Application
+Run the application:
 
 ```bash
 uvicorn app.main:app --reload --port 8000
@@ -298,15 +262,15 @@ uvicorn app.main:app --reload --port 8000
 
 # 📘 API Documentation
 
-### Swagger UI
+Swagger UI
 
-```text
+```
 http://127.0.0.1:8000/docs
 ```
 
-### ReDoc
+ReDoc
 
-```text
+```
 http://127.0.0.1:8000/redoc
 ```
 
@@ -314,34 +278,34 @@ http://127.0.0.1:8000/redoc
 
 # 💡 Example Queries
 
-### Document Search
+**Document Search**
 
-```text
+```
 Find all fire safety requirements mentioned in the uploaded RFQ documents.
 ```
 
-### BOQ Analysis
+**BOQ Validation**
 
-```text
-List all equipment and quantities from the BOQ.
+```
+Compare quantities between the BOQ and technical specifications.
 ```
 
-### Conflict Detection
+**Conflict Detection**
 
-```text
-Compare quantities mentioned in BOQ and specifications.
+```
+Identify conflicting specifications across all uploaded documents.
 ```
 
-### Risk Assessment
+**Risk Assessment**
 
-```text
-Identify procurement risks in this RFQ package.
+```
+Summarize procurement risks found in this RFQ package.
 ```
 
-### Engineering Validation
+**Engineering Intelligence**
 
-```text
-Check for inconsistencies across all uploaded engineering documents.
+```
+Generate an executive summary of the uploaded engineering documents.
 ```
 
 ---
@@ -353,30 +317,29 @@ Check for inconsistencies across all uploaded engineering documents.
 * Engineering Document Validation
 * Construction BOQ Verification
 * Tender Risk Assessment
-* Knowledge Base Search
-* Enterprise Document Intelligence
+* Enterprise Knowledge Search
+* Technical Compliance Checking
 
 ---
 
-# 📈 Future Enhancements
+# 🚀 Future Enhancements
 
-* LangGraph Integration
-* Multi-Agent Memory
-* Hybrid Search (BM25 + Vector Search)
-* CAD Drawing Intelligence
-* AWS Deployment
-* Docker Support
-* Multi-Modal AI Support
-* Autonomous Agent Planning
+* LangGraph orchestration
+* Multi-agent memory
+* Hybrid search (BM25 + FAISS)
+* Redis caching
+* Docker deployment
+* Kubernetes support
+* Multi-modal document understanding
+* CAD drawing analysis
+* AWS deployment
 
 ---
 
 # 👩‍💻 Author
 
 **Jaya Singh**
-AI/ML Engineer | Agentic AI Enthusiast
 
----
+AI Backend Developer | Agentic AI | FastAPI | RAG | Multi-Agent Systems
 
-⭐ If you found this project useful, consider giving it a star and contributing to future enhancements.
-"# Multi-Agents-Systems" 
+If you found this project useful, consider giving it a ⭐ to support the project.
