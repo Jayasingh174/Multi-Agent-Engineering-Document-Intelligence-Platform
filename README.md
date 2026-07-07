@@ -373,8 +373,8 @@ Check for inconsistencies across all uploaded engineering documents.
 
 # 👩‍💻 Author
 
-**Jaya Rajput**
-Full Stack Developer | AI/ML Engineer | Agentic AI Enthusiast
+**Jaya Singh**
+AI/ML Engineer | Agentic AI Enthusiast
 
 ---
 
