@@ -198,6 +198,8 @@ Multi-Agents-Systems/
 
 * FAISS
 * RAG Pipeline
+* Hybrid search (BM25 + FAISS)
+
 
 ## Document Processing
 
@@ -326,7 +328,6 @@ Generate an executive summary of the uploaded engineering documents.
 
 * LangGraph orchestration
 * Multi-agent memory
-* Hybrid search (BM25 + FAISS)
 * Redis caching
 * Docker deployment
 * Kubernetes support
