@@ -1,4 +1,5 @@
 from openai import AsyncOpenAI
+import asyncio
 import logging
 
 from app.config import (
@@ -6,6 +7,7 @@ from app.config import (
     OPENAI_MODEL,
     OPENAI_TEMPERATURE,
     OPENAI_MAX_TOKENS,
+    MAX_RETRIES,
 )
 
 logger = logging.getLogger(__name__)
@@ -31,7 +33,7 @@ async def ask_llm(question: str, context: str = "", mode: str = "qa"):
         # 100,000 characters is roughly 25,000 tokens. 
         safe_context = context[:100000] if context else ""
 
-        # 3. System Instructions (Optimized for your BOQ/RFQ format & UI requirements)
+        # 3. System Instructions (Optimized for your BOQ/RAG format & UI requirements)
         system_prompt = (
             "You are an intelligent Document Analysis Assistant.\n"
             "If answering based on provided context, strictly use the context. "
@@ -48,15 +50,36 @@ async def ask_llm(question: str, context: str = "", mode: str = "qa"):
             user_content = f"Question: {question}"
 
         # 4. LLM Call
-        response = await client.chat.completions.create(
-            model=OPENAI_MODEL,
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_content}
-            ],
-            temperature=OPENAI_TEMPERATURE,
-            max_tokens=OPENAI_MAX_TOKENS,
-        )
+        #
+        # 🔧 LOGIC FIX: this call previously had no retry logic at all — a
+        # single transient failure (rate limit, brief network error) fell
+        # straight through to the except-block below and returned
+        # "LLM processing failed" immediately. config.py declares
+        # MAX_RETRIES specifically for this ("Added your retry limit
+        # here"), and embedding_service.py already establishes the same
+        # exponential-backoff retry pattern for OpenAI calls elsewhere in
+        # this codebase — this brings ask_llm() in line with that, so a
+        # single rate-limit blip no longer surfaces as a hard failure to
+        # the user.
+        response = None
+        for attempt in range(MAX_RETRIES):
+            try:
+                response = await client.chat.completions.create(
+                    model=OPENAI_MODEL,
+                    messages=[
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": user_content}
+                    ],
+                    temperature=OPENAI_TEMPERATURE,
+                    max_tokens=OPENAI_MAX_TOKENS,
+                )
+                break
+            except Exception as e:
+                if attempt == MAX_RETRIES - 1:
+                    raise
+                wait = 1 * (2 ** attempt)
+                logger.warning(f"⚠️ LLM call attempt {attempt + 1} failed: {e}. Retrying in {wait}s...")
+                await asyncio.sleep(wait)
 
         # 5. Robust Extraction
         answer = response.choices[0].message.content
