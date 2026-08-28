@@ -23,11 +23,11 @@ from app.pipeline.optimization_service import retrieve_and_rerank
 logger = logging.getLogger(__name__)
 
 # ==========================================
-# 🚀 END-TO-END RFQ ANALYSIS PIPELINE
+# 🚀 END-TO-END RAG ANALYSIS PIPELINE
 # ==========================================
-async def run_full_rfq_analysis(file_path: str) -> Dict[str, Any]:
+async def run_full_rag_analysis(file_path: str) -> Dict[str, Any]:
     """
-    Executes the complete pipeline for a newly uploaded RFQ document.
+    Executes the complete pipeline for a newly uploaded RAG document.
     
     Workflow:
     1. Ingests the document into the Vector DB (RAG prep).
@@ -39,7 +39,7 @@ async def run_full_rfq_analysis(file_path: str) -> Dict[str, Any]:
     Returns:
         Dict[str, Any]: The structured JSON output from the multi-agent pipeline.
     """
-    logger.info(f"🚀 Initiating Full RFQ Pipeline for: {file_path}")
+    logger.info(f"🚀 Initiating Full RAG Pipeline for: {file_path}")
     
     # STEP 1: RAG Ingestion (Chunking, Embedding, Vector Storage)
     try:
