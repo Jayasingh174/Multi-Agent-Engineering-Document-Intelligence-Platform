@@ -2,7 +2,7 @@
 Agent & Search Router
 app/routers/agent_router.py
 
-Exposes the Multi-Agent RFQ pipeline, dynamic reasoning chat, and raw vector search.
+Exposes the Multi-Agent RAG pipeline, dynamic reasoning chat, and raw vector search.
 """
 
 import logging
@@ -11,7 +11,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
 # Import pipeline functions
-from app.pipeline.agent_pipeline import execute_agentic_chat, run_full_rfq_analysis
+from app.pipeline.agent_pipeline import execute_agentic_chat, run_full_rag_analysis
 
 # Import retrieval service for the raw search endpoint
 from app.pipeline.optimization_service import retrieve_and_rerank
@@ -40,22 +40,22 @@ class SearchResponse(BaseModel):
     results: List[Dict[str, Any]]
     confidence_score: float
 
-class RFQPipelineRequest(BaseModel):
-    file_path: str = Field(..., description="The local path to the uploaded RFQ document.")
+class RAGPipelineRequest(BaseModel):
+    file_path: str = Field(..., description="The local path to the uploaded RAG document.")
 
 
 # ==========================================
-# 🚀 1. FULL RFQ PIPELINE ENDPOINT
+# 🚀 1. FULL RAG PIPELINE ENDPOINT
 # ==========================================
-@router.post("/analyze-rfq", summary="Run Sequential RFQ Multi-Agent Pipeline")
-async def analyze_rfq_endpoint(request: RFQPipelineRequest):
+@router.post("/analyze-rag", summary="Run Sequential RAG Multi-Agent Pipeline")
+async def analyze_rag_endpoint(request: RAGPipelineRequest):
     """
     Triggers the end-to-end ingestion and multi-agent extraction pipeline.
     (Doc -> BOQ -> Risk -> Summary)
     """
-    logger.info(f"📄 Received RFQ Analysis Request for: {request.file_path}")
+    logger.info(f"📄 Received RAG Analysis Request for: {request.file_path}")
     try:
-        pipeline_response = await run_full_rfq_analysis(request.file_path)
+        pipeline_response = await run_full_rag_analysis(request.file_path)
         
         if pipeline_response.get("status") == "error":
             raise HTTPException(status_code=500, detail=pipeline_response.get("message"))
@@ -64,8 +64,8 @@ async def analyze_rfq_endpoint(request: RFQPipelineRequest):
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"❌ RFQ Router Error: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail="Critical failure in the RFQ pipeline.")
+        logger.error(f"❌ RAG Router Error: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Critical failure in the RAG pipeline.")
 
 
 # ==========================================
