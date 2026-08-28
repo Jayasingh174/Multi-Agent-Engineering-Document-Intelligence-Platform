@@ -217,7 +217,7 @@ async function triggerFullAnalysis(filename) {
 
     try {
         // 2. Call the dedicated sequential pipeline endpoint
-        const response = await fetch("/api/v1/agents/analyze-rfq", {
+        const response = await fetch("/api/v1/agents/analyze-rag", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ file_path: `uploads/${filename}` }) 
